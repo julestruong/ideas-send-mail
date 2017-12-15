@@ -1,23 +1,24 @@
 ﻿import debug = require('debug');
 import express = require('express');
 import path = require('path');
-
+import bodyParser = require('body-parser');
+import dotenv = require('dotenv');
+dotenv.config();
 import routes from './routes/index';
-import users from './routes/user';
-
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
+    console.log("camarcheca ?");
     var err = new Error('Not Found');
     err['status'] = 404;
     next(err);
